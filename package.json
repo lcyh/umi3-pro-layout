@@ -1,0 +1,46 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "cross-env REACT_APP_ENV=dev umi dev",
+    "mock": "cross-env REACT_APP_ENV=mock umi dev",
+    "dev": "cross-env REACT_APP_ENV=dev umi dev",
+    "pre": "cross-env REACT_APP_ENV=pre umi dev",
+    "qa": "cross-env REACT_APP_ENV=qa umi dev",
+    "online": "cross-env REACT_APP_ENV=pro umi build",
+    "build": "cross-env REACT_APP_ENV=pro umi build",
+    "postinstall": "umi generate tmp",
+    "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "dependencies": {
+    "@ant-design/pro-layout": "^6.5.0",
+    "@umijs/preset-react": "1.x",
+    "axios": "^0.21.1",
+    "cross-env": "^7.0.3",
+    "umi": "^3.3.9",
+    "umi-plugin-keep-alive": "^0.0.1-beta.22"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@umijs/test": "^3.3.9",
+    "lint-staged": "^10.0.7",
+    "prettier": "^2.2.0",
+    "react": "17.x",
+    "react-dom": "17.x",
+    "typescript": "^4.1.2",
+    "yorkie": "^2.0.0"
+  }
+}

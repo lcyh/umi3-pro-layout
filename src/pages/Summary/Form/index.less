@@ -1,0 +1,63 @@
+.home {
+  .game-table-header {
+    display: flex;
+    width: 100%;
+    padding-left: 10px;
+    background-color: #eff3fd;
+    .header-label {
+      &::before {
+        display: inline-block;
+        margin-right: 4px;
+        color: #ff4d4f;
+        font-size: 14px;
+        font-family: SimSun, sans-serif;
+        line-height: 1;
+        content: '*';
+      }
+    }
+    :global {
+      .ant-form-item {
+        flex: 1;
+        margin-bottom: 0px;
+        line-height: 50px;
+        height: 50px;
+      }
+    }
+  }
+  .game-table-content {
+    width: 100%;
+    flex-wrap: wrap;
+    padding-left: 10px;
+    .content-item {
+      display: inline-flex;
+      width: 100%;
+      border-bottom: 1px solid #eff3fd;
+    }
+    :global {
+      .ant-form-item {
+        flex: 1;
+        margin-bottom: 0px;
+        height: 50px;
+        .ant-form-item-control {
+          display: flex;
+          justify-content: center;
+        }
+      }
+    }
+  }
+  .game-table-item {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    padding-left: 10px;
+    border-bottom: 1px solid #eff3fd;
+    :global {
+      .ant-form-item {
+        flex: 1;
+        padding-right: 10px;
+        margin-bottom: 0px;
+        line-height: 50px;
+      }
+    }
+  }
+}

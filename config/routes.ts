@@ -1,0 +1,107 @@
+﻿
+export default [
+  {
+    name: 'project',
+    icon: 'project',
+    iconfont: 'project',
+    path: '/',
+    redirect: '/abtest/experiment',
+    exact: true,
+  },
+  {
+    name: 'project',
+    icon: 'project',
+    iconfont: 'project',
+    path: '/',
+    routes:[
+      {
+        name: 'abtest',
+        path: '/abtest',
+        redirect: '/abtest/experiment',
+        exact: true,
+      },
+      {
+        name: '实验管理',
+        icon: 'project',
+        iconfont: 'project',
+        path: '/abtest/experiment',
+        component: './Abtest/Experiment',
+        access: 'canDeleteFoo',
+        exact: true,
+      },
+      {
+        name: '受众管理',
+        icon: 'project',
+        iconfont: 'project',
+        path: '/abtest/audience',
+        component: './Abtest/Audience',
+        exact: true,
+      },
+      {
+        name: '变量管理',
+        icon: 'project',
+        iconfont: 'project',
+        path: '/abtest/variable',
+        component: './Abtest/Variable',
+        exact: true,
+      },
+      {
+        name: '实验层管理',
+        icon: 'project',
+        iconfont: 'project',
+        path: '/abtest/laboratory',
+        component: './Abtest/Laboratory',
+        exact: true,
+      },
+      {
+        name: '列表页',
+        path: '/demo',
+        redirect:'/demo/list',
+        exact: true,
+      },
+      {
+        name: '列表页',
+        path: '/demo/list',
+        component: './Demo/list',
+        exact: true,
+      },
+      {
+        name: '详情页',
+        path: '/demo/detail',
+        component: './Demo/detail',
+        exact: true,
+        hideInMenu: true,
+      },
+      {
+        name: 'from表单',
+        icon: 'form',
+        iconfont: 'form',
+        path: 'summary/form',
+        component: './Summary/Form',
+        exact: true,
+      },
+      {
+        name: 'month',
+        icon: 'month',
+        iconfont: 'month',
+        path: 'summary/month',
+        component: './Summary/Month',
+        exact: true,
+      },
+      {
+        name: 'profile',
+        icon: 'profile',
+        iconfont: 'profile',
+        path: '/profile',
+        component: './Profile',
+        exact: true,
+      },
+      {
+        component: './404',
+      },
+    ]
+  },
+  {
+    component: './404',
+  },
+];
