@@ -11,7 +11,7 @@ export default function(initialState:{ currentUser?: API.CurrentUser | undefined
       canAdmin: currentUser && currentUser.access === 'admin',
       canDeleteFoo: (curRoute:any) => {
         if(curRoute){
-            return currentUser?.hasRoutes?.includes(curRoute.name);
+            return currentUser?.hasRoutes?.includes(curRoute.name) || false;
         }
         return false;
       },
