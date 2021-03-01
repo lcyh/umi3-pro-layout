@@ -47,6 +47,7 @@ const request = extend({
   timeout: 1000 * 30,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
   },
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
@@ -63,7 +64,6 @@ request.interceptors.request.use((url, options) => {
 // response拦截器, 处理response
 request.interceptors.response.use(async (response) => {
   const result = await response.clone().json();
-  console.log('响应-response', { response, result });
   if (response.status === 200 && result) {
     //  将服务端返回的 message 赋值给 errorMsg，这样可以避免和 antd 的 message 组件重名
     if (typeof result === 'object') {
