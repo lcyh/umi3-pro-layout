@@ -13,6 +13,6 @@ export async function queryNotices(): Promise<any> {
 }
 
 // 获取菜单列表
-export const getAuthList = async(): Promise<any> => {
+export async function getAuthList (): Promise<any>{
   return request.get("/authList", {});
 };

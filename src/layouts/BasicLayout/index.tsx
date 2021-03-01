@@ -13,7 +13,7 @@ import ProLayout, {
 } from '@ant-design/pro-layout';
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, history, useAccess, useModel } from 'umi';
-import { Spin } from 'antd';
+import { Spin, message as AntdMessage } from 'antd';
 import {
   GithubOutlined,
   SmileOutlined,
@@ -25,6 +25,7 @@ import requestData from './requestData';
 import { sysLoginOut } from '@/services/login';
 import styles from './index.less';
 import { LayoutContext } from './context';
+import { getAuthList } from '@/services/user';
 import defaultSettings from '../../../config/defaultSettings';
 
 export type BasicLayoutProps = {
@@ -77,7 +78,7 @@ const BasicLayout: React.FC<any> = (props) => {
   } = props;
   const [menuListData, setMenuListData] = useState<MenuDataItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [index, setIndex] = useState(0);
+  const [breadcrumbName, setBreadcrumbName] = useState('/');
   const menuDataRef = useRef<MenuDataItem[]>([]);
   const { initialState } = useModel('@@initialState');
   const access = useAccess();
@@ -85,11 +86,21 @@ const BasicLayout: React.FC<any> = (props) => {
   useEffect(() => {
     setMenuListData([]);
     setLoading(true);
-    setTimeout(() => {
-      setMenuListData(requestData);
-      setLoading(false);
-    }, 1000);
-  }, [index]);
+    getAuthList()
+      .then((result) => {
+        const { code, data = {}, message } = result;
+        if (code !== 0) {
+          AntdMessage.error(message);
+          return;
+        }
+        setMenuListData(data.authList || []);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        AntdMessage.error(error);
+      });
+  }, []);
 
   console.log('layout-props-menuDataRef-access', {
     props,
@@ -147,13 +158,14 @@ const BasicLayout: React.FC<any> = (props) => {
               return <Link to={menuItemProps.path}>{defaultDom}</Link>;
             }}
             breadcrumbRender={(routers = []) => {
-              return [
+              let newBreadcrumb = [
                 {
                   path: '/',
                   breadcrumbName: '首页',
                 },
                 ...routers,
               ];
+              return newBreadcrumb;
             }}
             itemRender={(route, params, routes, paths) => {
               return <Link to={route.path}>{route.breadcrumbName}</Link>;
