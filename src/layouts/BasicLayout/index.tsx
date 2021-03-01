@@ -9,11 +9,11 @@ import type {
 } from '@ant-design/pro-layout';
 import ProLayout, {
   DefaultFooter,
-  PageHeaderWrapper,
+  PageContainer,
 } from '@ant-design/pro-layout';
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, history, useAccess, useModel } from 'umi';
-import { Spin, message as AntdMessage } from 'antd';
+import { Spin, message as AntdMessage, Button } from 'antd';
 import {
   GithubOutlined,
   SmileOutlined,
@@ -78,7 +78,6 @@ const BasicLayout: React.FC<any> = (props) => {
   } = props;
   const [menuListData, setMenuListData] = useState<MenuDataItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [breadcrumbName, setBreadcrumbName] = useState('/');
   const menuDataRef = useRef<MenuDataItem[]>([]);
   const { initialState } = useModel('@@initialState');
   const access = useAccess();
@@ -158,14 +157,13 @@ const BasicLayout: React.FC<any> = (props) => {
               return <Link to={menuItemProps.path}>{defaultDom}</Link>;
             }}
             breadcrumbRender={(routers = []) => {
-              let newBreadcrumb = [
+              return [
                 {
                   path: '/',
                   breadcrumbName: '首页',
                 },
                 ...routers,
               ];
-              return newBreadcrumb;
             }}
             itemRender={(route, params, routes, paths) => {
               return <Link to={route.path}>{route.breadcrumbName}</Link>;
@@ -191,7 +189,38 @@ const BasicLayout: React.FC<any> = (props) => {
               return menuData || [];
             }}
           >
-            <PageHeaderWrapper title="测试">{children}</PageHeaderWrapper>
+            <PageContainer
+              content="欢迎使用 ProLayout 组件"
+              tabList={
+                location.pathname === '/abtest/experiment'
+                  ? [
+                      {
+                        tab: '基本信息',
+                        key: 'base',
+                      },
+                      {
+                        tab: '详细信息',
+                        key: 'info',
+                      },
+                    ]
+                  : []
+              }
+              // extra={[
+              //   <Button key="3">操作</Button>,
+              //   <Button key="2">操作</Button>,
+              //   <Button key="1" type="primary">
+              //     主操作
+              //   </Button>,
+              // ]}
+              // footer={[
+              //   <Button key="rest">重置</Button>,
+              //   <Button key="submit" type="primary">
+              //     提交
+              //   </Button>,
+              // ]}
+            >
+              {children}
+            </PageContainer>
           </ProLayout>
         </Spin>
       </div>
