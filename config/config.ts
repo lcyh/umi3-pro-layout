@@ -62,9 +62,9 @@ let defaultConfig = {
     default: 'zh-CN', // default zh-CN
     baseNavigator: true,
   },
-  dynamicImport: {
-    loading: '@/components/PageLoading/index',
-  },
+  // dynamicImport: {
+  //   loading: '@/components/PageLoading/index',
+  // },
   // 暂时关闭
   pwa: false,
   title: 'CRM',
