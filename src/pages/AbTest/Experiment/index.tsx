@@ -2,11 +2,13 @@ import React from 'react';
 import { Access, useAccess } from 'umi';
 import logoPng from '@/assets/loginbg.png';
 import styles from './index.less';
+import { useStore } from '@/layouts/BasicLayout/context';
 
 export default (props: any) => {
   const { route } = props;
   const access = useAccess();
-  console.log('experiment', { props, access, route });
+  const store = useStore();
+  console.log('experiment---', { props, access, store, route });
 
   return (
     <div className={styles['abtest-experiment']}>
@@ -19,12 +21,6 @@ export default (props: any) => {
         fallback={<div>Can not read foo content.</div>}
       >
         Foo content-可读.
-      </Access>
-      <Access
-        accessible={access.canUpdateFoo}
-        fallback={<div>Can not update foo.</div>}
-      >
-        Update foo-更新.
       </Access>
       <Access
         accessible={access.canDeleteFoo(route)}

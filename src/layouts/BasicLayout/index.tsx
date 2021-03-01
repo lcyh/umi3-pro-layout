@@ -14,12 +14,18 @@ import ProLayout, {
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, history, useAccess, useModel } from 'umi';
 import { Spin } from 'antd';
-import { GithubOutlined } from '@ant-design/icons';
+import {
+  GithubOutlined,
+  SmileOutlined,
+  HeartOutlined,
+} from '@ant-design/icons';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import logo from '@/assets/logo.png';
 import requestData from './requestData';
 import { sysLoginOut } from '@/services/login';
 import styles from './index.less';
+import { LayoutContext } from './context';
+import defaultSettings from '../../../config/defaultSettings';
 
 export type BasicLayoutProps = {
   breadcrumbNameMap: Record<string, MenuDataItem>;
@@ -56,6 +62,10 @@ const defaultFooterDom = (
     ]}
   />
 );
+const IconMap: any = {
+  smile: <SmileOutlined />,
+  heart: <HeartOutlined />,
+};
 
 const BasicLayout: React.FC<any> = (props) => {
   const {
@@ -71,7 +81,7 @@ const BasicLayout: React.FC<any> = (props) => {
   const menuDataRef = useRef<MenuDataItem[]>([]);
   const { initialState } = useModel('@@initialState');
   const access = useAccess();
-
+  const stores = { initialState, access, menuDataRef };
   useEffect(() => {
     setMenuListData([]);
     setLoading(true);
@@ -81,7 +91,7 @@ const BasicLayout: React.FC<any> = (props) => {
     }, 1000);
   }, [index]);
 
-  console.log('layout-props-props-menuDataRef-access', {
+  console.log('layout-props-menuDataRef-access', {
     props,
     menuDataRef,
     initialState,
@@ -90,74 +100,90 @@ const BasicLayout: React.FC<any> = (props) => {
 
   const handleMenuCollapse = (payload: boolean): void => {};
 
+  const loopMenuItem = (menus: MenuDataItem[]): MenuDataItem[] => {
+    let newMenuList = menus.map(({ icon, children, ...item }) => ({
+      ...item,
+      hideInMenu: item.visible,
+      icon: icon && IconMap[icon as string],
+      children: children && loopMenuItem(children),
+    }));
+    return newMenuList;
+  };
+
   return (
-    <div className={styles['basic-layout-wrapper']}>
-      <Spin size="large" spinning={loading} className={styles['spin-loading']}>
-        <ProLayout
-          className={styles['basic-layout-content']}
-          logo={logo}
-          {...props}
-          {...settings}
-          layout="mix"
-          splitMenus={true}
-          fixSiderbar
-          onCollapse={handleMenuCollapse}
-          onPageChange={async () => {
-            const { location } = history;
-            // 如果没有登录，重定向到 login
-            if (!initialState?.currentUser && location.pathname !== '/login') {
-              await sysLoginOut();
-              history.push('/login');
-            }
-          }}
-          onMenuHeaderClick={() => history.push('/')}
-          menuItemRender={(menuItemProps, defaultDom) => {
-            if (
-              menuItemProps.isUrl ||
-              !menuItemProps.path ||
-              location.pathname === menuItemProps.path
-            ) {
-              return menuItemProps.name;
-            }
-            return <Link to={menuItemProps.path}>{menuItemProps.name}</Link>;
-          }}
-          breadcrumbRender={(routers = []) => {
-            return [
-              {
-                path: '/',
-                breadcrumbName: '首页',
-              },
-              ...routers,
-            ];
-          }}
-          itemRender={(route, params, routes, paths) => {
-            return <Link to={route.path}>{route.breadcrumbName}</Link>;
-          }}
-          breadcrumbProps={(routes = []) => routes}
-          footerRender={() => {
-            if (
-              settings?.footerRender ||
-              settings?.footerRender === undefined
-            ) {
-              return defaultFooterDom;
-            }
-            return null;
-          }}
-          menu={{
-            loading,
-            defaultOpenAll: true,
-          }}
-          menuDataRender={() => menuListData}
-          rightContentRender={() => <RightContent />}
-          postMenuData={(menuData) => {
-            menuDataRef.current = menuData || [];
-            return menuData || [];
-          }}
+    <LayoutContext.Provider value={{ ...stores }}>
+      <div className={styles['basic-layout-wrapper']}>
+        <Spin
+          size="large"
+          spinning={loading}
+          className={styles['spin-loading']}
         >
-          <PageHeaderWrapper title="测试">{children}</PageHeaderWrapper>
-        </ProLayout>
-      </Spin>
-    </div>
+          <ProLayout
+            className={styles['basic-layout-content']}
+            logo={logo}
+            {...props}
+            {...defaultSettings}
+            onCollapse={handleMenuCollapse}
+            onPageChange={async () => {
+              const { location } = history;
+              // 如果没有登录，重定向到 login
+              if (
+                !initialState?.currentUser &&
+                location.pathname !== '/login'
+              ) {
+                await sysLoginOut();
+                history.push('/login');
+              }
+            }}
+            onMenuHeaderClick={() => history.push('/')}
+            menuItemRender={(menuItemProps, defaultDom) => {
+              if (
+                menuItemProps.isUrl ||
+                !menuItemProps.path ||
+                location.pathname === menuItemProps.path
+              ) {
+                return defaultDom;
+              }
+              return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+            }}
+            breadcrumbRender={(routers = []) => {
+              return [
+                {
+                  path: '/',
+                  breadcrumbName: '首页',
+                },
+                ...routers,
+              ];
+            }}
+            itemRender={(route, params, routes, paths) => {
+              return <Link to={route.path}>{route.breadcrumbName}</Link>;
+            }}
+            breadcrumbProps={(routes = []) => routes}
+            footerRender={() => {
+              if (
+                settings?.footerRender ||
+                settings?.footerRender === undefined
+              ) {
+                return defaultFooterDom;
+              }
+              return null;
+            }}
+            menu={{
+              loading,
+              defaultOpenAll: true,
+            }}
+            menuDataRender={() => loopMenuItem(menuListData)}
+            rightContentRender={() => <RightContent />}
+            postMenuData={(menuData) => {
+              menuDataRef.current = menuData || [];
+              return menuData || [];
+            }}
+          >
+            <PageHeaderWrapper title="测试">{children}</PageHeaderWrapper>
+          </ProLayout>
+        </Spin>
+      </div>
+    </LayoutContext.Provider>
   );
 };
 
