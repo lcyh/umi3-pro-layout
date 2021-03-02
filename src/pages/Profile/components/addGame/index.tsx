@@ -54,7 +54,7 @@ const AddGame = ({
 
   return (
     <div className={styles['add-game']}>
-      <Form.List name={[field.name, 'gameInfo']} initialValue={value}>
+      <Form.List name={[field.name, 'gameInfo']}>
         {(fields, { add, remove }) => (
           <>
             {fields.map((field, index) => (
