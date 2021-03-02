@@ -22,17 +22,19 @@ const initVal = [
     name1: '1111',
     name2: ['222'],
     name3: '333',
-    gameList: [
+    gameInfo: [
       {
         gameType: '单游戏',
-        contentList: [
-          { type: 'single', label: '阿舒服' },
-          { type: 'zero', label: '共和国胡椒粉' },
-        ],
+        game: '哈哈哈',
+        // contentList: [
+        //   { type: 'single', label: '阿舒服' },
+        //   { type: 'zero', label: '共和国胡椒粉' },
+        // ],
       },
       {
         gameType: '策略游戏',
-        contentList: [{ type: 'single', label: '复古风格分' }],
+        game: '复古风的回复',
+        // contentList: [{ type: 'single', label: '复古风格分' }],
       },
     ],
   },
@@ -40,13 +42,14 @@ const initVal = [
     name1: '你好',
     name2: ['电风扇地方'],
     name3: '法国的',
-    gameList: [
+    gameInfo: [
       {
         gameType: '元神',
-        contentList: [
-          { type: 'single', label: '吃个饭地方' },
-          { type: 'single', label: '哟西' },
-        ],
+        game: '放过的',
+        // contentList: [
+        //   { type: 'single', label: '吃个饭地方' },
+        //   { type: 'single', label: '哟西' },
+        // ],
       },
     ],
   },
@@ -145,7 +148,8 @@ const HomePage = () => {
                     rules={[{ required: true, message: '请填写' }]}
                     {...formItemLayout}
                   >
-                    {<AddGame form={form} outField={field} index={index} />}
+                    {/* {<AddGame form={form} outField={field} index={index} />} */}
+                    {<AddGame field={field} index={index} />}
                   </Form.Item>
                   {fields && fields.length > 1 && (
                     <div
