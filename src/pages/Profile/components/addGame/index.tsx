@@ -9,12 +9,12 @@ const gameTypeMapData: any = ['全部', '单游戏', '策略游戏'];
 interface IValueProps {
   gameType?: string;
   game?: string;
+  contentList?: any[];
 }
 
 interface IAddGameProps {
-  // 共用一个 form实例
-  form?: any;
-  field?: any;
+  form: any;
+  outField?: any;
   index: number;
   value?: IValueProps[];
   onChange?: (val: any) => void;
@@ -22,51 +22,80 @@ interface IAddGameProps {
 
 const AddGame = ({
   form,
-  field,
+  outField,
   index: FirstIndex,
   value = [],
   onChange,
 }: IAddGameProps) => {
-  const [secondIdnex, setSecondIndex] = useState(0);
-  console.log('AddGame', { field, value });
-  const [selectData, setSelectData] = useState<string[][]>([['1', '2']]);
-  const triggerChange = (index: number, changedValue: any) => {
-    if (onChange) {
-      value[index] = {
-        ...value[index],
-        ...changedValue,
-      };
-      onChange(value);
-      setSecondIndex(index);
-    }
-  };
+  console.log('AddGame', { outField, value });
+  const [selectData, setSelectData] = useState<any[]>(value);
 
   useEffect(() => {}, []);
 
-  const onInputChange = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement>,
+  const triggerChange = (
+    secondIndex: number,
+    innerIndex: number,
+    changedValue: any,
   ) => {
-    const gameVal = e.target.value || '';
-    triggerChange(index, { game: gameVal });
+    selectData[secondIndex]!.contentList[innerIndex]!.label = changedValue;
+    if (onChange) {
+      onChange(selectData);
+    }
   };
 
-  const onSelectionChange = (index: number, selectVal: any) => {
-    // triggerChange(index, { gameType: selectVal });
+  const onInputChange = (
+    secondIndex: number,
+    innerIndex: number,
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const changedValue = e.target.value || '';
+    triggerChange(secondIndex, innerIndex, changedValue);
+  };
+
+  const onSubSelectChange = (
+    secondIndex: number,
+    innerIndex: number,
+    selectVal: any,
+  ) => {
+    triggerChange(secondIndex, innerIndex, selectVal);
+  };
+
+  const onSelectionChange = (secondIndex: number, selectVal: any) => {
+    console.log('selectVal', selectVal);
+
     if (selectVal === '单游戏') {
-      selectData[index] = ['1', '2'];
+      selectData[secondIndex] = {
+        gameType: selectVal,
+        type: 'single',
+        contentList: [
+          { type: 'single', label: 'hah' },
+          { type: 'zero', label: '11' },
+        ],
+      };
+    } else if (selectVal === '全部') {
+      selectData[secondIndex] = {
+        gameType: selectVal,
+        type: 'all',
+        contentList: [{ type: 'single', label: '22' }],
+      };
     } else {
-      selectData[index] = ['1'];
+      selectData[secondIndex] = {
+        gameType: selectVal,
+        type: 'other',
+        contentList: [{ type: 'single', label: '33' }],
+      };
     }
+    onChange!(selectData);
     setSelectData([...selectData]);
   };
+  console.log('111selectData', selectData);
 
   return (
     <div className={styles['add-game']}>
-      <Form.List name={[field.name, 'gameInfo']} initialValue={value}>
+      <Form.List name={[outField.name, 'gameInfo']} initialValue={selectData}>
         {(fields, { add, remove }) => (
           <>
-            {fields.map((field, index) => (
+            {fields.map((field, secondIndex) => (
               <div key={field.key} className={styles['game-table-item']}>
                 <Form.Item
                   {...field}
@@ -81,7 +110,7 @@ const AddGame = ({
                 >
                   <Select
                     style={{ width: '150px' }}
-                    onChange={(e) => onSelectionChange(index, e)}
+                    onChange={(e) => onSelectionChange(secondIndex, e)}
                   >
                     {(gameTypeMapData || []).map((item: any) => (
                       <Option key={item} value={item}>
@@ -90,32 +119,42 @@ const AddGame = ({
                     ))}
                   </Select>
                 </Form.Item>
-                {(selectData[index] || []).map(
+                {(selectData[secondIndex].contentList || []).map(
                   (item: any, innerIndex: number) => {
                     return (
                       <Form.Item
-                        key={item}
-                        fieldKey={item}
+                        key={item.label + secondIndex + innerIndex}
+                        fieldKey={item.label + secondIndex + innerIndex}
                         noStyle
-                        shouldUpdate={(preForm, nextForm) => {
-                          return preForm.profileInfo !== nextForm.profileInfo;
+                        shouldUpdate={(prevValues: any, nextValues: any) => {
+                          return true;
                         }}
                       >
                         {({ getFieldValue }) =>
-                          item === '1' ? (
+                          item.type === 'single' ? (
                             <Form.Item
                               {...field}
-                              name={[field.name, `game${innerIndex}`]}
-                              fieldKey={[field.fieldKey, `game${innerIndex}`]}
+                              initialValue={item.label}
+                              name={[
+                                field.name,
+                                `single-${item.label}-${innerIndex}`,
+                              ]}
+                              fieldKey={[
+                                field.fieldKey,
+                                `single-${item.label}-${innerIndex}`,
+                              ]}
                               rules={[{ required: true, message: '请填写' }]}
                             >
                               {
                                 <Input
                                   disabled={
                                     getFieldValue('profileInfo')![FirstIndex]
-                                      ?.gameInfo[index]?.gameType === '策略游戏'
+                                      ?.gameInfo[secondIndex]?.gameType ===
+                                    '策略游戏'
                                   }
-                                  // onChange={(e) => onInputChange(index, e)}
+                                  onBlur={(e) =>
+                                    onInputChange(secondIndex, innerIndex, e)
+                                  }
                                   style={{ width: '150px' }}
                                   maxLength={8}
                                   placeholder="请填写"
@@ -125,12 +164,28 @@ const AddGame = ({
                           ) : (
                             <Form.Item
                               {...field}
-                              name={[field.name, `$game${index}`]}
-                              fieldKey={[field.fieldKey, `$game${index}`]}
+                              initialValue={item.label}
+                              name={[
+                                field.name,
+                                `zero-${item.label}-${innerIndex}`,
+                              ]}
+                              fieldKey={[
+                                field.fieldKey,
+                                `zero-${item.label}-${innerIndex}`,
+                              ]}
                               rules={[{ required: true, message: '请填写' }]}
                             >
                               {
-                                <Select style={{ width: '150px' }}>
+                                <Select
+                                  style={{ width: '150px' }}
+                                  onChange={(e) =>
+                                    onSubSelectChange(
+                                      secondIndex,
+                                      innerIndex,
+                                      e,
+                                    )
+                                  }
+                                >
                                   {(gameTypeMapData || []).map((item: any) => (
                                     <Option key={item} value={item}>
                                       {item}
@@ -145,12 +200,12 @@ const AddGame = ({
                     );
                   },
                 )}
-                {index !== 0 ? (
+                {secondIndex !== 0 ? (
                   <Form.Item>
                     <DeleteOutlined
                       onClick={() => {
                         remove(field.name);
-                        selectData.splice(index, 1);
+                        selectData.splice(secondIndex, 1);
                         setSelectData([...selectData]);
                       }}
                     />
@@ -163,8 +218,14 @@ const AddGame = ({
                 <Button
                   type="dashed"
                   onClick={() => {
-                    add({ gameType: '全部' });
-                    selectData.push(['1']);
+                    add({
+                      gameType: '全部',
+                      contentList: [],
+                    });
+                    selectData.push({
+                      gameType: '全部',
+                      contentList: [],
+                    });
                     setSelectData([...selectData]);
                   }}
                   block
