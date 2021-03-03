@@ -31,6 +31,12 @@ const domains: any = {
     wmc: 'http://qa.xxx.com',
     sso: 'http://sso.xxx.com',
   },
+  pro: {
+    api: 'http://api.cn',
+    apiTarget: '',
+    wmc: 'http://xxx.com',
+    sso: 'http://sso.xxx.com',
+  },
 };
 
 const domain = domains[REACT_APP_ENV];

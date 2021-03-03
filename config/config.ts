@@ -17,6 +17,9 @@ let defaultConfig = {
   base: '/',
    // publicPath: '/xk/',
   publicPath: '/',
+  manifest: {
+    basePath: '/',
+  },
   dva: {
     hmr: true,
   },
@@ -54,9 +57,6 @@ let defaultConfig = {
         return localName;
       },
     },
-  },
-  manifest: {
-    basePath: '/',
   },
   locale: {
     default: 'zh-CN', // default zh-CN
