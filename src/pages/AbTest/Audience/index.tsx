@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styles from './index.less';
-import { Button } from 'antd';
+import { Button, Form } from 'antd';
 import CustomColumn from '@/components/CustomColumn';
+import CitySelect from '@/components/CitySelect';
 
 const Audience = (props: any) => {
   const [visible, SetVisible] = useState(false);
@@ -11,6 +12,7 @@ const Audience = (props: any) => {
   return (
     <div className={styles['abtest-audience']}>
       <h1 className={styles.title}>这是abtest-audience页面---</h1>
+      <CitySelect currentCity={{ key: '340000', name: '安徽省' }} />
       <Button onClick={onBtnClick}>设置可见列</Button>
       <CustomColumn
         visible={visible}

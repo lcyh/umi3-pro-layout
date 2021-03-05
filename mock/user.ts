@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import menuData from './menu';
+import { cityData } from '../src/components/CitySelect/allcity';
 
 const waitTime = (time: number = 100) => {
   return new Promise((resolve) => {
@@ -30,6 +31,15 @@ const getAccess = () => {
 
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 export default {
+  'POST /api/cityList': (req: Request, res: Response) => {
+    res.send({
+      code: 0,
+      message: '',
+      data: {
+        provinceVos: cityData,
+      },
+    });
+  },
   'POST /api/audience/list': (req: Request, res: Response) => {
     res.send({
       code: 0,

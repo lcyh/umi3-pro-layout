@@ -1,0 +1,81 @@
+.city-select-container {
+  .city-check-container {
+    box-sizing: border-box;
+    width: 160px;
+    height: 40px;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+    position: relative;
+  }
+  .city-check {
+    position: absolute;
+    top: 9px;
+    left: 16px;
+    // padding: 5px 10px;
+    // border: 1px solid #d3d3d3;
+    // background-color: #fff;
+    // cursor: pointer;
+  }
+  .city-icon {
+    position: absolute;
+    top: 9px;
+    right: 16px;
+  }
+  .current-city {
+    line-height: 31px;
+    font-size: 14px;
+    color: #333333;
+  }
+  .single-check-color {
+    color: rgba(79, 122, 253, 1);
+  }
+  .city-content {
+    margin-top: 4px;
+    padding: 8px;
+    width: 408px;
+    height: 588px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    .header {
+      padding: 16px 24px;
+      // width:100%;
+      font-size: 14px;
+      color: #333333;
+      line-height: 22px;
+      position: relative;
+    }
+    .name {
+      position: absolute;
+      left: 8px;
+      top: 8px;
+    }
+    .close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      cursor: pointer;
+    }
+  }
+  .show {
+    display: block;
+  }
+  .hide {
+    display: none;
+  }
+  .auto-scrollbar {
+    height: 300px;
+    padding: 0 10px;
+    overflow: auto;
+  }
+  .city-hover:hover {
+    cursor: pointer;
+    border-radius: 4px;
+    transition-property: 'background';
+    transition-duration: 0.3s;
+    transition-timing-function: linear;
+    color: rgba(79, 122, 253, 1);
+    line-height: 1;
+  }
+}

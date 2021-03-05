@@ -4,13 +4,13 @@ import { history } from 'umi';
 import { queryCurrent } from './services/user';
 import defaultSettings from '../config/defaultSettings';
 
-import { autoFixContext } from 'react-activation';
+// import { autoFixContext } from 'react-activation';
 
-autoFixContext(
-  [require('react/jsx-runtime'), 'jsx', 'jsxs', 'jsxDEV'],
-  // @ts-ignore
-  [require('react/jsx-dev-runtime'), 'jsx', 'jsxs', 'jsxDEV'],
-);
+// autoFixContext(
+//   [require('react/jsx-runtime'), 'jsx', 'jsxs', 'jsxDEV'],
+//   // @ts-ignore
+//   [require('react/jsx-dev-runtime'), 'jsx', 'jsxs', 'jsxDEV'],
+// );
 
 //获取 初始状态
 export async function getInitialState(): Promise<{
