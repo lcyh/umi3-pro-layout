@@ -1,5 +1,4 @@
-﻿
-export default [
+﻿export default [
   {
     path: '/',
     redirect: '/abtest/experiment',
@@ -94,7 +93,7 @@ export default [
       {
         name: 'month',
         path: '/summary/month',
-        routes:[
+        routes: [
           {
             name: 'month-1级列表页面',
             icon: 'month',
@@ -109,7 +108,7 @@ export default [
             component: './Summary/MonthDetail',
             exact: true,
           },
-        ]
+        ],
       },
       // {
       //   name: 'month详情页-11级列表页面',
@@ -122,6 +121,19 @@ export default [
     ],
   },
   {
+    name: 'hooks',
+    path: '/hooks',
+    routes: [
+      {
+        name: 'hooks',
+        icon: 'hooks',
+        path: '/hooks/request',
+        component: './Hooks/Request',
+        exact: true,
+      },
+    ],
+  },
+  {
     name: 'profile',
     icon: 'profile',
     path: '/profile',
@@ -131,4 +143,4 @@ export default [
   {
     component: './404',
   },
-]
+];

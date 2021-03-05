@@ -29,6 +29,7 @@
     "@umijs/preset-react": "1.x",
     "axios": "^0.21.1",
     "cross-env": "^7.0.3",
+    "express": "^4.17.1",
     "umi": "^3.3.9",
     "umi-plugin-keep-alive": "^0.0.1-beta.22"
   },

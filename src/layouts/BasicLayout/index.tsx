@@ -101,12 +101,12 @@ const BasicLayout: React.FC<any> = (props) => {
       });
   }, []);
 
-  console.log('layout-props-menuDataRef-access', {
-    props,
-    menuDataRef,
-    initialState,
-    access,
-  });
+  // console.log('layout-props-menuDataRef-access', {
+  //   props,
+  //   menuDataRef,
+  //   initialState,
+  //   access,
+  // });
 
   const handleMenuCollapse = (payload: boolean): void => {};
 

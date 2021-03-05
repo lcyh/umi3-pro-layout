@@ -80,20 +80,19 @@ const menuData = [
         icon: 'form',
         path: '/summary/form',
       },
+    ],
+  },
+  {
+    path: '/hooks',
+    name: 'hooks菜单',
+    children: [
       {
-        path: '/data_ming',
-        name: '明细数据',
-        children: [
-          {
-            path: '/other/outLoadMenu',
-            name: '菜单导出',
-            visible: true,
-          },
-          {
-            path: '/other/homeEdit',
-            name: '概述导出',
-          },
-        ],
+        path: '/hooks/request',
+        name: 'hooks1',
+      },
+      {
+        path: '/hooks/other',
+        name: 'hooks2',
       },
     ],
   },
