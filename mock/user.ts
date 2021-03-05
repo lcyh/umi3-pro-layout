@@ -11,7 +11,7 @@ const waitTime = (time: number = 100) => {
 
 async function getFakeCaptcha(req: Request, res: Response) {
   await waitTime(2000);
-  return res.json({data:'123',code:0,message:''});
+  return res.json({ data: '123', code: 0, message: '' });
 }
 
 const { ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION } = process.env;
@@ -21,7 +21,8 @@ const { ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION } = process.env;
  * current user access， if is '', user need login
  * 如果是 pro 的预览，默认是有权限的
  */
-let access = ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site' ? 'admin' : '';
+let access =
+  ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site' ? 'admin' : '';
 
 const getAccess = () => {
   return 'admin';
@@ -29,6 +30,22 @@ const getAccess = () => {
 
 // 代码中会兼容本地 service mock 以及部署站点的静态数据
 export default {
+  'POST /api/audience/list': (req: Request, res: Response) => {
+    res.send({
+      code: 0,
+      message: '',
+      data: [
+        { key: 1, name: 'aa', select: true },
+        { key: 2, name: 'bb', select: true },
+        { key: 3, name: 'cc', select: true },
+        { key: 4, name: 'dd', select: true },
+        { key: 5, name: 'dd11', select: false },
+        { key: 6, name: 'dd22', select: false },
+        { key: 7, name: 'dd33', select: true },
+        { key: 8, name: 'dd44', select: true },
+      ],
+    });
+  },
   // 支持值为 Object 和 Array
   'GET /api/currentUser': (req: Request, res: Response) => {
     // if (!getAccess()) {
@@ -43,20 +60,21 @@ export default {
     //   return;
     // }
     res.send({
-      code:0,
-      message:'',
-      data:{
+      code: 0,
+      message: '',
+      data: {
         username: 'Colin',
-        avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+        avatar:
+          'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
         userid: '111',
         email: 'antdesign@alipay.com',
         title: '交互专家',
         notifyCount: 12,
         unreadCount: 11,
         country: 'China',
-        hasRoutes:['/abtest/experiment','/abtest/audience'],
+        hasRoutes: ['/abtest/experiment', '/abtest/audience'],
         access: getAccess(),
-      }
+      },
     });
   },
   'GET /api/authList': (req: Request, res: Response) => {
@@ -72,11 +90,11 @@ export default {
     //   return;
     // }
     res.send({
-      code:0,
-      message:'',
-      data:{
-        authList:menuData
-      }
+      code: 0,
+      message: '',
+      data: {
+        authList: menuData,
+      },
     });
   },
   // GET POST 可省略
@@ -102,14 +120,14 @@ export default {
   ],
   //登录
   'POST /api/account/login': async (req: Request, res: Response) => {
-    const { account, verifyCode, type='' } = req.body;  // type 暂时不用，可以传 手机号还是用户名
+    const { account, verifyCode, type = '' } = req.body; // type 暂时不用，可以传 手机号还是用户名
     await waitTime(2000);
     if (account === '17621204427' && verifyCode === '123') {
       res.send({
-        code:0,
-        data:{token:'##token'},
+        code: 0,
+        data: { token: '##token' },
         status: 'ok',
-        message:'success',
+        message: 'success',
         type,
         currentAuthority: 'admin',
       });
@@ -117,9 +135,9 @@ export default {
       return;
     }
     res.send({
-      code:9999,
+      code: 9999,
       status: 'error',
-      message:'error',
+      message: 'error',
       type,
       currentAuthority: 'guest',
     });
@@ -128,7 +146,12 @@ export default {
   //退出
   'POST /api/login/outLogin': (req: Request, res: Response) => {
     access = '';
-    res.send({code:0, data: {token:null},message:'success', success: true });
+    res.send({
+      code: 0,
+      data: { token: null },
+      message: 'success',
+      success: true,
+    });
   },
   //注册
   'POST /api/register': (req: Request, res: Response) => {

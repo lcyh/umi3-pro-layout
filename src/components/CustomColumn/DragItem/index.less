@@ -1,0 +1,30 @@
+.listWrap {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eaeaea;
+
+  > div {
+    padding-left: 68px;
+    flex: 1;
+  }
+  .anticon-pause {
+    width: 150px;
+    height: 54px;
+    line-height: 54px;
+  }
+  :global {
+    .ant-checkbox-wrapper,
+    .ant-checkbox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ant-checkbox {
+      width: 92px;
+      height: 54px;
+    }
+    .ant-checkbox-checked::after {
+      border: 0;
+    }
+  }
+}

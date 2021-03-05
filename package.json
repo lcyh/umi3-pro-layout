@@ -30,6 +30,8 @@
     "axios": "^0.21.1",
     "cross-env": "^7.0.3",
     "express": "^4.17.1",
+    "react-dnd": "^13.1.1",
+    "react-dnd-html5-backend": "^12.1.1",
     "umi": "^3.3.9",
     "umi-plugin-keep-alive": "^0.0.1-beta.22"
   },
