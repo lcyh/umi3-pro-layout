@@ -119,8 +119,6 @@ const CitySelect: FC<CitySelectProps> = (props) => {
       ? currentCity.name.slice(0, 4) + '...'
       : currentCity.name;
 
-  console.log('cityData', cityData);
-
   return (
     <div className={styles['city-select-container']}>
       <Form form={form} name="control-hooks">
@@ -183,57 +181,54 @@ const CitySelect: FC<CitySelectProps> = (props) => {
           <Divider style={{ marginTop: 10 }} />
           <section>
             <div className={styles['auto-scrollbar']}>
-              {
-                // {isSearchFindCity &&
-                cityData.map((item: any, index) => {
-                  return (
-                    <Row key={item.key} id={item.key}>
-                      <Col span={2} style={{ fontSize: 28, color: '#ccc' }}>
-                        {item.key}
-                      </Col>
-                      <Col span={22} style={{ margin: '10px 0' }}>
-                        {(item.province || []).map((innerItem: any) => (
-                          <Row key={innerItem.areaCode}>
-                            <Col
-                              span={5}
-                              style={{ padding: '0 10px', fontWeight: 'bold' }}
-                            >
-                              {innerItem.areaName}
-                            </Col>
-                            <Col span={19}>
-                              {_.isArray(innerItem.children) &&
-                                innerItem.children.map(
-                                  (inner: any, index: number) => (
-                                    <span key={inner.areaCode}>
-                                      <span
-                                        className={styles['city-hover']}
-                                        onClick={handleClickCity.bind(
-                                          null,
-                                          inner,
-                                        )}
-                                      >
-                                        {inner.areaName}
-                                      </span>
-                                      <span>
-                                        {' '}
-                                        {index ===
-                                        innerItem.children.length - 1 ? (
-                                          ''
-                                        ) : (
-                                          <Divider type="vertical" />
-                                        )}
-                                      </span>
+              {cityData.map((item: any, index) => {
+                return (
+                  <Row key={item.key} id={item.key}>
+                    <Col span={2} style={{ fontSize: 28, color: '#ccc' }}>
+                      {item.key}
+                    </Col>
+                    <Col span={22} style={{ margin: '10px 0' }}>
+                      {(item.province || []).map((innerItem: any) => (
+                        <Row key={innerItem.areaCode}>
+                          <Col
+                            span={5}
+                            style={{ padding: '0 10px', fontWeight: 'bold' }}
+                          >
+                            {innerItem.areaName}
+                          </Col>
+                          <Col span={19}>
+                            {_.isArray(innerItem.children) &&
+                              innerItem.children.map(
+                                (inner: any, index: number) => (
+                                  <span key={inner.areaCode}>
+                                    <span
+                                      className={styles['city-hover']}
+                                      onClick={handleClickCity.bind(
+                                        null,
+                                        inner,
+                                      )}
+                                    >
+                                      {inner.areaName}
                                     </span>
-                                  ),
-                                )}
-                            </Col>
-                          </Row>
-                        ))}
-                      </Col>
-                    </Row>
-                  );
-                })
-              }
+                                    <span>
+                                      {' '}
+                                      {index ===
+                                      innerItem.children.length - 1 ? (
+                                        ''
+                                      ) : (
+                                        <Divider type="vertical" />
+                                      )}
+                                    </span>
+                                  </span>
+                                ),
+                              )}
+                          </Col>
+                        </Row>
+                      ))}
+                    </Col>
+                  </Row>
+                );
+              })}
             </div>
           </section>
         </div>

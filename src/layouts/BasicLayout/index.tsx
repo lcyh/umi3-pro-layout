@@ -13,7 +13,7 @@ import ProLayout, {
 } from '@ant-design/pro-layout';
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, history, useAccess, useModel } from 'umi';
-import { Spin, message as AntdMessage, Button } from 'antd';
+import { Spin, message as AntdMessage } from 'antd';
 import {
   GithubOutlined,
   SmileOutlined,
