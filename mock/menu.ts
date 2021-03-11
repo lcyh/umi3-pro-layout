@@ -69,6 +69,23 @@ const menuData = [
         path: '/summary/month',
         children: [
           {
+            name: 'month-1级列表页面',
+            icon: 'month1',
+            path: '/summary/month/month1',
+            children: [
+              {
+                name: 'month-1-1级列表页面',
+                icon: 'month-1-1',
+                path: '/summary/month/month1/month11',
+              },
+            ],
+          },
+          {
+            name: 'month-2级列表页面',
+            icon: 'month-2',
+            path: '/summary/month/month2',
+          },
+          {
             id: 2,
             name: '11级列表页面',
             path: '/summary/month/monthDetail',

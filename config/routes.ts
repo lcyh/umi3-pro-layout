@@ -71,11 +71,11 @@
     name: '汇总数据-列表页',
     path: '/summary',
     routes: [
-      // {
-      //   path: '/summary',
-      //   redirect: '/summary/month',
-      //   exact: true,
-      // },
+      {
+        path: '/summary',
+        redirect: '/summary/month',
+        exact: true,
+      },
       {
         name: 'form',
         icon: 'form',
@@ -93,13 +93,41 @@
       {
         name: 'month',
         path: '/summary/month',
+        component: './Summary/Month',
         routes: [
+          // {
+          //   name: 'month-1级列表页面',
+          //   icon: 'month',
+          //   path: '/summary/month',
+          //   redirect: '/summary/month/month1',
+          // },
           {
             name: 'month-1级列表页面',
-            icon: 'month',
-            path: '/summary/month',
+            icon: 'month1',
+            path: '/summary/month/month1',
+            component: './Summary/Month/Month1',
+            routes: [
+              // {
+              //   name: 'month-1级列表页面',
+              //   icon: 'month',
+              //   path: '/summary/month/month1',
+              //   redirect: '/summary/month/month1/month11',
+              // },
+              {
+                name: 'month-1-1级列表页面',
+                icon: 'month-1-1',
+                path: '/summary/month/month1/month11',
+                exact: true,
+                component: './Summary/Month/Month1/Month11',
+              },
+            ],
+          },
+          {
+            name: 'month-2级列表页面',
+            icon: 'month-2',
+            path: '/summary/month/month2',
             exact: true,
-            component: './Summary/Month',
+            component: './Summary/Month/Month2',
           },
           {
             name: 'month详情页-11级列表页面',

@@ -84,7 +84,14 @@ class Month extends React.Component {
       ],
     };
     return (
-      <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+      <div>
+        {this.props.children}
+        <Table
+          rowSelection={rowSelection}
+          columns={columns}
+          dataSource={data}
+        />
+      </div>
     );
   }
 }
