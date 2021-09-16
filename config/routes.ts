@@ -159,6 +159,13 @@
         component: './Hooks/Request',
         exact: true,
       },
+      {
+        name: 'hooks',
+        icon: 'hooks',
+        path: '/hooks/other',
+        component: './Hooks/Other',
+        exact: true,
+      },
     ],
   },
   {
