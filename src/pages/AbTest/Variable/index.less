@@ -1,3 +1,32 @@
-.home {
-  height: 100vh;
+.body {
+  position: relative;
+  .title {
+    height: 100px;
+  }
+  .tabs-warpper {
+    position: sticky;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d7d7d7;
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    box-sizing: border-box;
+    top: 0px;
+    z-index: 1;
+    .item {
+      flex: 1;
+      height: 100%;
+      text-align: center;
+      border-right: 1px solid #d7d7d7;
+      &:last-child {
+        border-right: none;
+      }
+      &.active {
+        background: #555555;
+        color: #fff;
+      }
+    }
+  }
 }
